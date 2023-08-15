@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Shop.css'
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
-
+import { addToCartLocalStorage, getShoppingCart } from '../LocalStorage/LocalStorage';
 
 
 const Shop = () => {
@@ -14,10 +14,16 @@ const Shop = () => {
             .then(data => setProducts(data))
     }, []);
 
+    useEffect(() =>{
+        const storedCart = getShoppingCart();
+        console.log(storedCart)
+    },[])
+
     const handleAddToCart = (product) => {
         console.log('product added', product);
         const newCart = [...cart, product];
-        setCart(newCart)
+        setCart(newCart);
+        addToCartLocalStorage(product.id)
     }
 
     return (
